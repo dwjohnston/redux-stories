@@ -1,0 +1,36 @@
+{
+  "name": "redux-stories",
+  "version": "0.0.0",
+  "description": "A declarative framework for redux and redux-saga",
+  "author": "david@blacksheepcode.com",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "start": "tsc --watch",
+    "build": "tsc",
+    "compile": "./node_modules/typescript/bin/tsc -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "typescript": "3.5.1"
+  },
+  "dependencies": {
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
+    "reduce-reducers": "^1.0.1",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2"
+  }
+}

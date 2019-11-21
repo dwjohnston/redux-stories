@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "outDir": "./lib",
+        "module": "commonjs",
+        "declaration": true,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true ,
+        "lib": [
+            "esnext",
+            "dom"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ], 
+    "exclude": [
+        "*.spec.*"
+    ]
+}
