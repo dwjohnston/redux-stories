@@ -3,26 +3,26 @@ import { PutEffect, CallEffect } from "redux-saga/effects";
 
 
 
-export interface BaseActorInterface<P, Q> {
 
-}
 
 /**
  * S = State
  * K = Keys
  */
-export interface Story<S extends StateType, K extends ActorMap> {
+export interface Story<S extends StateType, K extends ActorMap<S>> {
 
     reducerName: string;
     reducer: ReduxReducer<S, any>;
     sagas: ReduxSaga<any, any>[];
-    actors: Record<keyof K, Actor<S, PayloadType, PayloadType>>;
+    actors: {
+        [key in keyof K] : K[key]
+    }
 }
 
-export type PayloadType = any | undefined; 
-export type StateType = PayloadType; 
+export type PayloadType = any | undefined;
+export type StateType = PayloadType;
 
-export type ActorMap = object extends Record<string, BaseActorInterface<PayloadType, PayloadType>>>; 
+export type ActorMap<S extends StateType> =  Record<string, Actor<S, PayloadType, PayloadType>>;
 
 
 /**
@@ -37,7 +37,7 @@ export interface Actor<S extends StateType, P extends PayloadType, Q> {
     resetAction: ActionCreator<undefined>;
     clearErrorsAction: ActionCreator<undefined>;
     saga: ReduxSaga<P, Q>;
-    reducerCreator: ReducerCreator<S, Q>; 
+    reducerCreator: ReducerCreator<S, Q>;
 }
 
 
@@ -58,16 +58,16 @@ export interface ActionBundle {
     CANCEL: string;
     CANCELLED: string;
     UPDATE: string;
-    CLEAR_ERRORS: string; 
+    CLEAR_ERRORS: string;
 }
 
-export type DataFetchFunction<P extends PayloadType, Q extends PayloadType> = (payload: P) => Promise<Q>;  
+export type DataFetchFunction<P extends PayloadType, Q extends PayloadType> = (payload: P) => Promise<Q>;
 
 //Todo extend this as needed
-export type SagaYields = PutEffect<any> | CallEffect<any>; 
+export type SagaYields = PutEffect<any> | CallEffect<any>;
 
-export interface ReduxSaga<P, Q> {
-    (action: ReduxAction<P>): Generator<SagaYields, ReduxAction<PayloadType>, SagaYields>;
+export interface ReduxSaga<P extends PayloadType, Q extends PayloadType> {
+    (action: ReduxAction<P>): Generator<SagaYields, SagaYields, SagaYields>;
 }
 
 
@@ -78,7 +78,7 @@ export interface SagaWatcher {
 
 
 export interface ReducerCreatorCreator<S extends StateType, Q extends PayloadType> {
-    (actionBundle: ActionBundle) : ReducerCreator<S, Q>
+    (actionBundle: ActionBundle): ReducerCreator<S, Q>
 }
 export interface ReducerCreator<S extends StateType, Q extends PayloadType> {
     (initialState: S): ReduxReducer<S, Q>;

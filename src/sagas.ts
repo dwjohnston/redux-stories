@@ -1,10 +1,10 @@
-import { ActionBundle, DataFetchFunction, PayloadType, ReduxAction } from "./baseTypes";
+import { ActionBundle, DataFetchFunction, PayloadType, ReduxAction, SagaYields, ReduxSaga } from "./baseTypes";
 import { put, call,  take, delay, race,  } from "redux-saga/effects";
 
 export function createGenericApiSaga<P extends PayloadType, Q extends PayloadType>(
     actions: ActionBundle,
     apiCall: DataFetchFunction<P, Q>,
-) {
+) : ReduxSaga<P, Q> {
     return function* (action: ReduxAction<P>) {
         try {            
             const result: Q = yield call(apiCall, action.payload);
@@ -26,5 +26,5 @@ export function createGenericApiSaga<P extends PayloadType, Q extends PayloadTyp
                 }
             });
         }
-    }
+    }  as unknown as ReduxSaga<P,Q> //todo
 }

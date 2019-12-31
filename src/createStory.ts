@@ -1,12 +1,12 @@
-import { PayloadType, Story, Actor, StateType, BaseActorInterface } from "./baseTypes";
+import { PayloadType, Story, Actor, StateType, ActorMap } from "./baseTypes";
 import reduceReducers from "reduce-reducers";
 
 export function createStory<S extends StateType,
-    K extends Record<string, BaseActorInterface<PayloadType, PayloadType>>
+    K extends ActorMap<S>
     >(
     reducerName: string,
     initialState: S,
-    actors: Record<keyof K, Actor<S, PayloadType, PayloadType>>
+    actors: K
 ): Story<S, K> {
     return {
         reducerName: reducerName,

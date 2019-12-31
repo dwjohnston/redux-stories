@@ -22,7 +22,15 @@ describe("Create story", () => {
 
         const createFetchUserAction = story.actors.fetchUser.createAction("aaa"); 
         expect(createFetchUserAction.type).toEqual("FETCH_USER_REQUEST"); 
-        expect(createFetchUserAction.payload).toEqual("aaa")
+        expect(createFetchUserAction.payload).toEqual("aaa")       
 
+    }); 
+
+
+    it ("The action functions match the signatures of the API calls I passed in", () => {
+      
+        //@ts-ignore - this is working
+        const createFetchUserAction = story.actors.fetchUser.createAction(999); 
+         
     })
 })
