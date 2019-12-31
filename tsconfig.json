@@ -14,11 +14,12 @@
         "esModuleInterop": true ,
         "lib": [
             "esnext",
-            "dom"
+            "dom", 
+            "ES2017.Object"
         ]
     },
     "include": [
-        "./src/**/*"
+        "src"
     ], 
     "exclude": [
         "*.spec.*"
