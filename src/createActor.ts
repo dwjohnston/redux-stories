@@ -1,5 +1,5 @@
 import { Actor, ActionBundle, ReduxAction, PayloadType, ActionCreator, DataFetchFunction } from "./baseTypes";
-import { createGenericApiSaga } from "./sagas";
+import { createGenericApiSaga, createDefaultSagaWatcher } from "./sagas";
 import { createCreateClobberReducer } from "./reducers";
 
 
@@ -59,13 +59,15 @@ export function createActor<S, P extends PayloadType, Q extends PayloadType>(bas
 
 
     const actionBundles = createActionBundle(baseName);
+    const saga = createGenericApiSaga(actionBundles, apiCall); 
     return {
         actions: actionBundles,
         createAction: defaultCreateActionCreator<P>(actionBundles),
         cancelAction: defaultCreateCancelCreator(actionBundles), 
         resetAction: defaultCreateResetCreator(actionBundles), 
         clearErrorsAction: defaultCreateClearErrorsAction(actionBundles), 
-        saga: createGenericApiSaga(actionBundles, apiCall), 
+        saga: saga, 
+        sagaWatcher: createDefaultSagaWatcher(actionBundles, saga), 
         reducerCreator: createCreateClobberReducer(actionBundles), 
     }
 }

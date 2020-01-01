@@ -9,7 +9,6 @@ export function createCreateClobberReducer<
     ) => (state = initialState, action: ReduxAction<Q>) => {
 
         if (action.type === actionBundle.UPDATE) {
-
             return action.payload as unknown as S;
         }
 

@@ -11,7 +11,7 @@ export function createStory<S extends StateType,
     return {
         reducerName: reducerName,
         reducer: reduceReducers(initialState, ...Object.values(actors).map(v => v.reducerCreator(initialState))),
-        sagas: Object.values(actors).map(v => v.saga),
+        sagaWatchers: Object.values(actors).map(v => v.sagaWatcher),
         actors: actors,
     }
 }

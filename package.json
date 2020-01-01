@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch", 
     "start": "tsc --watch",
     "build": "tsc",
     "compile": "./node_modules/typescript/bin/tsc -p ./tsconfig.json"

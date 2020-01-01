@@ -1,5 +1,5 @@
 import { Reducer, AnyAction } from "redux";
-import { PutEffect, CallEffect } from "redux-saga/effects";
+import { PutEffect, CallEffect, TakeEffect, RaceEffect } from "redux-saga/effects";
 
 
 
@@ -13,7 +13,7 @@ export interface Story<S extends StateType, K extends ActorMap<S>> {
 
     reducerName: string;
     reducer: ReduxReducer<S, any>;
-    sagas: ReduxSaga<any, any>[];
+    sagaWatchers: ReduxSagaWatcher[];
     actors: {
         [key in keyof K] : K[key]
     }
@@ -37,6 +37,7 @@ export interface Actor<S extends StateType, P extends PayloadType, Q> {
     resetAction: ActionCreator<undefined>;
     clearErrorsAction: ActionCreator<undefined>;
     saga: ReduxSaga<P, Q>;
+    sagaWatcher: ReduxSagaWatcher; 
     reducerCreator: ReducerCreator<S, Q>;
 }
 
@@ -61,7 +62,7 @@ export interface ActionBundle {
     CLEAR_ERRORS: string;
 }
 
-export type DataFetchFunction<P extends PayloadType, Q extends PayloadType> = (payload: P) => Promise<Q>;
+export type DataFetchFunction<P extends PayloadType, Q extends PayloadType> = (payload: P) => Promise<Q> |Q;
 
 //Todo extend this as needed
 export type SagaYields = PutEffect<any> | CallEffect<any>;
@@ -69,6 +70,9 @@ export type SagaYields = PutEffect<any> | CallEffect<any>;
 export interface ReduxSaga<P extends PayloadType, Q extends PayloadType> {
     (action: ReduxAction<P>): Generator<SagaYields, SagaYields, SagaYields>;
 }
+
+export type WatcherYields = TakeEffect|RaceEffect<any>; 
+export type ReduxSagaWatcher = () => Generator<WatcherYields, WatcherYields, WatcherYields>; 
 
 
 export interface SagaWatcher {
